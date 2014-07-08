@@ -3,7 +3,7 @@ language: node_js
 # test on latest node.js version
 node_js:
   - "0.10"
-  - "0.10.29"
+  - "0.10.26"
 
 # Load various services
 services:
