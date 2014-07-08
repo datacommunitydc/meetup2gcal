@@ -1,0 +1,19 @@
+language: node_js
+
+# test on latest node.js version
+node_js:
+  - "0.10"
+  - "0.10.29"
+
+# Load various services
+services:
+    - mongodb
+
+# configure notifications (email, IRC, campfire etc)
+notifications:
+  email:
+    recipients:
+      - benjamin@bengfort.com
+      - harlan@harris.name
+    on_success: change
+    on_failure: always

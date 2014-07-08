@@ -1,0 +1,51 @@
+{
+  "name": "meetup2gcal",
+  "version": "0.0.1",
+  "description": "A Node/Heroku system for piping Meetup events into a Google Calendar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datacommunitydc/meetup2gcal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/datacommunitydc/meetup2gcal/issues"
+  },
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "make test"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Benjamin Bengfort <benb@datacommunitydc.org>",
+    "Harlan Harris <harlan@datacommunitydc.org>"
+  ],
+  "keywords": [
+    "meetup",
+    "gcal"
+  ],
+  "dependencies": {
+    "express": "~4.2.0",
+    "static-favicon": "~1.0.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "jade": "~1.3.0",
+    "mongodb": "*",
+    "winston": "~0.7.2",
+    "mongoose": "~3.8.8",
+    "q": "~1.0.0",
+    "dotenv": "~0.2.3",
+    "underscore": "~1.5.2",
+    "underscore.string": "*",
+    "pretty-hrtime": "*"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*",
+    "sinon": "*"
+  },
+  "main": "./bin/www",
+  "engines": {
+    "node": "0.10.x"
+  }
+}
