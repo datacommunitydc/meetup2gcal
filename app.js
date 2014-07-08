@@ -19,15 +19,19 @@
 // Initialize local variables
 //////////////////////////////////////////////////////////////////////////
 
+var _ = require('underscore');
+_.str = require('underscore.string');
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
+var config = require('./config/application');
+var logger = require('./config/logger');
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var users  = require('./routes/users');
 
 var app = express();
 
@@ -44,7 +48,6 @@ app.set('view engine', 'jade');
 //////////////////////////////////////////////////////////////////////////
 
 app.use(favicon());
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
@@ -53,17 +56,64 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+//////////////////////////////////////////////////////////////////////////
+// Database Connection
+//////////////////////////////////////////////////////////////////////////
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+    logger.info('Connected to the database at %s', config.database.connection);
+});
+mongoose.connect(config.database.connection);
+
+//////////////////////////////////////////////////////////////////////////
+// Load Models
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+// Logger handler
+//////////////////////////////////////////////////////////////////////////
+
+app.use(function(err, req, res, next) {
+    function logRequest() {
+
+        res.removeListener('finish', logRequest);
+        res.removeListener('close', logRequest);
+        try {
+            var now = new Date();
+            var rlf = 'Served %(method)s %(path)s request %(statusCode)d in %(elapsed)dms';
+
+            var data = {
+              method: req.method.toUpperCase(),
+              path: req.path(),
+              statusCode: res.statusCode,
+              elapsed: now.getTime() - req._time,
+              error: error
+            };
+
+            logger.info(_.str.sprintf(rlf, data), data);
+        } catch (e) {
+            logger.error('Could not log request', {error: e.toString()});
+        }
+    };
+
+    res.on('finish', logRequest);
+    res.on('close', logRequest);
+
+    next();
+});
+
+//////////////////////////////////////////////////////////////////////////
+// Error handlers
+//////////////////////////////////////////////////////////////////////////
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
-
-//////////////////////////////////////////////////////////////////////////
-// Error handlers
-//////////////////////////////////////////////////////////////////////////
 
 // development error handler
 // will print stacktrace

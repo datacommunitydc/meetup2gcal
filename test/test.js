@@ -31,7 +31,7 @@ console.log('');
 console.log('Starting meetup2gcal test suite');
 console.log('');
 console.log('    Current Configuration:');
-console.log('        1) environment is \'%s\'', config.environment);
+console.log('        1) environment is \'%s\'', app.get('env'));
 
 // start server and save url for tests
 var server = app.listen(config.port);
