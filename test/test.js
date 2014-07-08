@@ -23,7 +23,7 @@
 // Load APP and create convenience variables
 var app = require('../app');
 
-// var config = require('../config/application');
+var config = require('../config/application');
 // var logger = require('../lib/logger');
 
 // Print configuration for test debugging
@@ -31,12 +31,12 @@ console.log('');
 console.log('Starting meetup2gcal test suite');
 console.log('');
 console.log('    Current Configuration:');
-console.log('        1) environment is \'%s\'', 'test');
+console.log('        1) environment is \'%s\'', config.environment);
 
 // start server and save url for tests
-app.listen(3000);
-var url = app.url;
-console.log('        2) test server is %s', url);
+var server = app.listen(config.port);
+var addr   = server.address()
+console.log('        2) test server is %s:%d', addr.address, addr.port);
 
 //////////////////////////////////////////////////////////////////////////
 // Load unit tests

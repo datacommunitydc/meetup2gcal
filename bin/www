@@ -1,9 +1,38 @@
 #!/usr/bin/env node
-var debug = require('debug')('meetup2gcal');
-var app = require('../app');
+/**
+ *  www
+ *  Executable script to start the node.js server
+ *
+ *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>
+ *  Created:  Mon Jul 07 23:31:34 2014 -0400
+ *
+ *  Copyright (C) 2014 Data Community DC
+ *  For license information, see LICENSE.txt
+ *
+ *  ID: www [] benb@datacommunitydc.org $
+ */
 
-app.set('port', process.env.PORT || 3000);
+// JS Hint directives and strict mode
+/* globals exports,__filename */
+'use strict';
+
+//////////////////////////////////////////////////////////////////////////
+// Requires
+//////////////////////////////////////////////////////////////////////////
+
+var debug  = require('debug')('meetup2gcal');
+var config = require('../config/application');
+var logger = require('../config/logger');
+var app    = require('../app');
+
+//////////////////////////////////////////////////////////////////////////
+// Configuration
+//////////////////////////////////////////////////////////////////////////
+
+app.set('port', config.port);
 
 var server = app.listen(app.get('port'), function() {
+  var addr = this.address();
+  logger.info('application started in \'%s\' mode (%s:%d)', config.environment, addr.address, addr.port);
   debug('Express server listening on port ' + server.address().port);
 });
