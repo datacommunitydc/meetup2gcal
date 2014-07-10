@@ -21,9 +21,11 @@
 
 var _ = require('underscore');
 var Q = require('q');
+var crypto   = require('crypto');
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var bcrypt   = require('bcrypt-nodejs');
+var qs       = require('querystring');
 
 //////////////////////////////////////////////////////////////////////////
 // UserSchema
@@ -40,6 +42,7 @@ var UserSchema = new Schema({
   },
   created           : { type: Date, required: true, default: Date.now },
   updated           : { type: Date, required: true, default: Date.now },
+  last_login        : { type: Date, required: false, default: Date.now }
 });
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,7 +65,8 @@ UserSchema.path('google.id').index({ unique: true });
 //////////////////////////////////////////////////////////////////////////
 
 /**
- * Ensure that various dates are updated
+ * Ensure that various dates are updated.
+ * Ensure that a password is hashed.
  *
  * @param  {Function} next callback
  * @return {null}
@@ -102,6 +106,13 @@ UserSchema.methods.validPassword = function(password) {
 //////////////////////////////////////////////////////////////////////////
 // Virtual Properties
 //////////////////////////////////////////////////////////////////////////
+
+UserSchema.virtual('gravatar').get(function() {
+  var baseURL   = "http://s.gravatar.com/avatar/";
+  var query     = qs.stringify({'d': 'mm', 's': 200});
+  var emailHash = crypto.createHash('md5').update(this.email.toLowerCase().trim()).digest('hex');
+  return baseURL + emailHash + '?' + query;
+});
 
 //////////////////////////////////////////////////////////////////////////
 // Static Methods

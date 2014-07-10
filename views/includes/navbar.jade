@@ -1,0 +1,27 @@
+nav(class="navbar navbar-default navbar-fixed-top navbar-inverse", role="navigation")
+  .container
+    .navbar-header
+      button(type="button", class="navbar-toggle", data-toggle="collapse", data-target="#")
+        span(class="sr-only") Toggle navigation
+        i(class="fa fa-bars")
+      a(class="navbar-brand", href="/") meetup2gcal
+
+    div(class="collapse navbar-collapse navbar-right")
+      ul(class="nav navbar-nav")
+        if user
+          li.dropdown
+            a(href="#", class="dropdown-toggle" data-toggle="dropdown") #{user.name} <b class="caret"></b>
+            ul.dropdown-menu
+              li.dropdown-header Management
+              li: a(href="/users")
+                i(class="fa fa-group")
+                |  View Users
+              li.dropdown-header User Settings
+              li: a(href='/profile')
+                i(class="fa fa-user")
+                |  View Profile
+              li: a(href='/logout')
+                i(class="fa fa-road")
+                |  Log Out
+        else
+          li: a(href='/auth/google') Login

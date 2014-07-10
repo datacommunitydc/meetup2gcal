@@ -1,8 +1,35 @@
+html,
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
 }
 
-a {
-  color: #00B7FF;
+body {
+    padding-top: 70px;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -76px;
+    padding: 0 0 106px;
+}
+
+#footer {
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    height: 76px;
+    padding: 30px 15px;
+    font-size: 16px;
+    font-family: 'Open Sans Condensed' sans-serif;
+}
+
+#footer p {
+    margin: 0;
+}
+
+img.logo {
+    margin-top: 16px;
+    margin-right: 22px;
+    max-width: 200px;
 }

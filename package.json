@@ -26,7 +26,6 @@
     "express": "~4.2.0",
     "express-session": "*",
     "connect-flash": "*",
-    "static-favicon": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
@@ -41,7 +40,8 @@
     "pretty-hrtime": "*",
     "bcrypt-nodejs": "*",
     "passport": "*",
-    "passport-google-oauth": "*"
+    "passport-google-oauth": "*",
+    "markdown-js": "*"
   },
   "devDependencies": {
     "chai": "*",

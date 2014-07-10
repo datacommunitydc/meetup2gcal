@@ -1,10 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  if user
-    p You are currently logged in as #{user.email}
-    p: a(href='/logout') Log Out
-  else
-    p: a(href='/auth/google') Login
+  .container
+    .row
+      .col-md-12
+        .page-header
+          .pull-left
+            img(src='/images/dc2_logo.png', alt='DC2', class="img-responsive logo")
+          .pull-left
+            h1= title
+            p.lead Welcome to #{title}
+          .clearfix

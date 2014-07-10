@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-md-12
+        .page-header
+          h1 All Users
+    .row
+      .col-md-12
+        table(class='table table-bordered table-hover')
+          thead
+            th Name
+            th Email
+            th Joined
+            th Last Login
+          tbody
+            each user in users
+              tr
+                td= user.name
+                td= user.email
+                td= user.created.toDateString()
+                td= user.last_login.toDateString()

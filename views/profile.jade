@@ -1,6 +1,22 @@
 extends layout
 
 block content
-  h1= user.name
-  p You are currently logged in.
-  p: a(href='/logout') Log Out
+  .container
+    .row
+      .col-md-3
+        img(class="img-responsive img-thumbnail", alt="Gravatar", src=user.gravatar)
+        h3= user.name
+        hr.text-muted
+
+        ul.list-unstyled
+          li
+            i(class="fa fa-envelope")
+            |  #{user.email}
+          li
+            i(class="fa fa-clock-o")
+            |  Joined: #{user.created.toDateString()}
+          li
+            i(class="fa fa-cog")
+            |  Last Login: #{user.last_login.toDateString()}
+      .col-md-9
+        p TODO: Insert profile data

@@ -1,0 +1,18 @@
+/* TEAM */
+
+    Developer: Benjamin Bengfort
+    Contact: benb [at] datacommunitydc.org
+    Twitter: @bbengfort
+    From: Washington, DC
+
+    Developer: Harlan Harris
+    Contact: harlan [at] datacommunitydc.org
+    Twitter: @harlanh
+    From: Washington, DC
+
+/* SITE */
+
+    Last update: 2014/07/10
+    Language: English
+    Doctype: HTML5
+    IDE: Sublime Text 3

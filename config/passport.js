@@ -60,7 +60,11 @@ module.exports = function(passport) {
 
           if (user) {
             // if a user is found, log them in.
-            return done(null, user);
+            user.last_login = new Date();
+            user.save(function(err) {
+              if (err) throw err;
+              return done(null, user);
+            });
           } else {
             // the user isn't in the database, create a new user
             var newUser = new User();

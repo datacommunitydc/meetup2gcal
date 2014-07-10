@@ -23,7 +23,6 @@ var _ = require('underscore');
 _.str = require('underscore.string');
 var express = require('express');
 var path = require('path');
-var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -53,7 +52,6 @@ require('./config/passport')(passport);
 // Load middleware
 //////////////////////////////////////////////////////////////////////////
 
-app.use(favicon());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
