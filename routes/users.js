@@ -14,7 +14,7 @@ function isLoggedIn(req, res, next) {
 router.get('/', isLoggedIn, function(req, res) {
   Q(User.find().exec())
     .then(function(users) {
-      res.render('users', {title: 'meetup2gcal | All Users', users: users});
+      res.render('users', {title: 'meetup2gcal | All Users', users: users, user: req.user});
     },
     function(err) {
       throw err;
