@@ -27,6 +27,9 @@ var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var session  = require('express-session');
+var flash    = require('connect-flash');
 
 var config = require('./config/application');
 var logger = require('./config/logger');
@@ -43,6 +46,9 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// configure passport
+require('./config/passport')(passport);
+
 //////////////////////////////////////////////////////////////////////////
 // Load middleware
 //////////////////////////////////////////////////////////////////////////
@@ -52,6 +58,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport middleware
+app.use(session({ secret: config.secret, saveUninitialized: true, resave: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+//////////////////////////////////////////////////////////////////////////
+// Load Routes
+//////////////////////////////////////////////////////////////////////////
 
 app.use('/', routes);
 app.use('/users', users);

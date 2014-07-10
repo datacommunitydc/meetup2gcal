@@ -43,6 +43,9 @@ var configuration = {
   // runtime environment
   environment: process.env.NODE_ENV,
 
+  // secret key for sessions
+  secret: process.env.SECRET_KEY,
+
   // port to respond on
   port: process.env.PORT,
 
@@ -51,9 +54,31 @@ var configuration = {
     connection: process.env.DATABASE_CONNECTION,
     database: _.last(process.env.DATABASE_CONNECTION.split('/')),
     hostname: _.first(_.last(process.env.DATABASE_CONNECTION.split('//')).split('/'))
+  },
+
+  // authentication information
+  auth: {
+
+    // Google OAuth
+    googleAuth: {
+      clientID     : process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret : process.env.GOOGLE_AUTH_SECRET,
+      callbackURL  : process.env.GOOGLE_AUTH_CALLBACK
+    }
+
   }
 
 };
+
+//////////////////////////////////////////////////////////////////////////
+// Testing configuration
+//////////////////////////////////////////////////////////////////////////
+
+// Update with test configuration
+if (process.env.NODE_ENV === 'test') {
+  var testConfig = require('./testing');
+  _.extend(configuration, testConfig);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Exports

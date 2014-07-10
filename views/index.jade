@@ -3,3 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  if user
+    p You are currently logged in as #{user.email}
+    p: a(href='/logout') Log Out
+  else
+    p: a(href='/auth/google') Login

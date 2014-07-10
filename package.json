@@ -24,6 +24,8 @@
   ],
   "dependencies": {
     "express": "~4.2.0",
+    "express-session": "*",
+    "connect-flash": "*",
     "static-favicon": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
@@ -36,7 +38,10 @@
     "dotenv": "~0.2.3",
     "underscore": "~1.5.2",
     "underscore.string": "*",
-    "pretty-hrtime": "*"
+    "pretty-hrtime": "*",
+    "bcrypt-nodejs": "*",
+    "passport": "*",
+    "passport-google-oauth": "*"
   },
   "devDependencies": {
     "chai": "*",
