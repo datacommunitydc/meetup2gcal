@@ -32,19 +32,24 @@ console.log('Starting meetup2gcal test suite');
 console.log('');
 console.log('    Current Configuration:');
 console.log('        1) environment is \'%s\'', app.get('env'));
+console.log('        2) test database is \'%s\'', config.database.connection);
 
 // start server and save url for tests
 var server = app.listen(config.port);
 var addr   = server.address()
-console.log('        2) test server is %s:%d', addr.address, addr.port);
+console.log('        3) test server is %s:%d', addr.address, addr.port);
 
 //////////////////////////////////////////////////////////////////////////
 // Load unit tests
 //////////////////////////////////////////////////////////////////////////
 
 require('./unit/user')();
+require('./unit/lumberjack')();
 
 //////////////////////////////////////////////////////////////////////////
 // Load integration tests
 //////////////////////////////////////////////////////////////////////////
 
+require('./integration/index')();
+require('./integration/auth')();
+require('./integration/users')();
