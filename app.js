@@ -21,19 +21,22 @@
 
 var _ = require('underscore');
 _.str = require('underscore.string');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+
+var express  = require('express');
+var path     = require('path');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session  = require('express-session');
 var flash    = require('connect-flash');
+var config   = require('./config/application');
+var logger   = require('./app/utils/lumberjack');
 
-var config = require('./config/application');
-var logger = require('./config/logger');
-var routes = require('./routes/index');
-var users  = require('./routes/users');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+
+//////////////////////////////////////////////////////////////////////////
+// Construct the application
+//////////////////////////////////////////////////////////////////////////
 
 var app = express();
 
@@ -42,7 +45,7 @@ var app = express();
 //////////////////////////////////////////////////////////////////////////
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app', 'views'));
 app.set('view engine', 'jade');
 
 // configure passport
@@ -52,8 +55,10 @@ require('./config/passport')(passport);
 // Load middleware
 //////////////////////////////////////////////////////////////////////////
 
+app.use(logger.responseTime());
+app.use(logger.response());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -67,8 +72,7 @@ app.use(flash());
 // Load Routes
 //////////////////////////////////////////////////////////////////////////
 
-app.use('/', routes);
-app.use('/users', users);
+require('./config/routes')(app);
 
 //////////////////////////////////////////////////////////////////////////
 // Database Connection
@@ -89,34 +93,6 @@ mongoose.connect(config.database.connection);
 // Logger handler
 //////////////////////////////////////////////////////////////////////////
 
-app.use(function(err, req, res, next) {
-    function logRequest() {
-
-        res.removeListener('finish', logRequest);
-        res.removeListener('close', logRequest);
-        try {
-            var now = new Date();
-            var rlf = 'Served %(method)s %(path)s request %(statusCode)d in %(elapsed)dms';
-
-            var data = {
-              method: req.method.toUpperCase(),
-              path: req.path(),
-              statusCode: res.statusCode,
-              elapsed: now.getTime() - req._time,
-              error: error
-            };
-
-            logger.info(_.str.sprintf(rlf, data), data);
-        } catch (e) {
-            logger.error('Could not log request', {error: e.toString()});
-        }
-    };
-
-    res.on('finish', logRequest);
-    res.on('close', logRequest);
-
-    next();
-});
 
 //////////////////////////////////////////////////////////////////////////
 // Error handlers

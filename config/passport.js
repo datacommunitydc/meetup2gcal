@@ -1,5 +1,5 @@
 /**
- *  passport.js
+ *  config/passport.js
  *  Configuration for the passport (authentication) module
  *
  *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>

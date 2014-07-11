@@ -52,15 +52,7 @@ if (config.environment != 'test') {
 
 } else {
 
-  // return a mock object that eats logger calls
-  module.exports = {
-    silly: fake,
-    debug: fake,
-    verbose: fake,
-    info: fake,
-    warn: fake,
-    error: fake,
-    audit: fake
-  };
+  // Simply return the winston object, lumberjack will handle the mock
+  module.exports = winston;
 
 }

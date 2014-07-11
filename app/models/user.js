@@ -1,5 +1,5 @@
 /**
- *  user.js
+ *  app/models/user.js
  *  User Profile model for user authentication with node
  *
  *  Author:   Benjamin Bengfort <ben@cobrain.com>
