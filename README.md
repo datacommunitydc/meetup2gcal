@@ -1,5 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/datacommunitydc/meetup2gcal.png?label=ready&title=Ready)](https://waffle.io/datacommunitydc/meetup2gcal)
-# meetup2gcal [![Build Status][travis_img]][travis_status] [![Dependencies][david_img]][david_status] #
+# meetup2gcal [![Build Status][travis_img]][travis_status] [![Dependencies][david_img]][david_status] [![Stories in Ready][waffle_img]][waffle_status] #
 **A Node/Heroku system for piping Meetup events into a Google Calendar**
 
 [![Meetup Calendar][calendar_img]][calendar_img]
@@ -58,4 +57,6 @@ meetup2gcal needs a better name, but is written in Node.js (Javascript). Useful 
 [travis_status]: https://travis-ci.org/datacommunitydc/meetup2gcal
 [david_img]: https://david-dm.org/datacommunitydc/meetup2gcal.png
 [david_status]: https://david-dm.org/datacommunitydc/meetup2gcal
+[waffle_img]: https://badge.waffle.io/datacommunitydc/meetup2gcal.png?label=ready&title=Ready
+[waffle_status]: https://waffle.io/datacommunitydc/meetup2gcal
 [calendar_img]: http://fc00.deviantart.net/fs71/f/2010/090/0/5/Calendar_wheel_for_Conky_4_by_wlourf.png
