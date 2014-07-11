@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/datacommunitydc/meetup2gcal.png?label=ready&title=Ready)](https://waffle.io/datacommunitydc/meetup2gcal)
 # meetup2gcal [![Build Status][travis_img]][travis_status] [![Dependencies][david_img]][david_status] #
 **A Node/Heroku system for piping Meetup events into a Google Calendar**
 
