@@ -34,3 +34,20 @@ exports.index = function(req, res) {
 
   res.render('index', context);
 };
+
+/**
+ * Heartbeat endpoint that returns if the app is up or not
+ *
+ * @param  {Request}  req the request currently being handled
+ * @param  {Response} res the response to be sent
+ * @return {null}
+ */
+exports.alive = function(req, res) {
+  var context =  {
+    alive: true,
+    now: new Date()
+  }
+
+  res.type('application/json');
+  res.json(context);
+};
