@@ -1,6 +1,6 @@
 {
   "name": "meetup2gcal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Node/Heroku system for piping Meetup events into a Google Calendar",
   "repository": {
     "type": "git",
@@ -23,30 +23,30 @@
     "gcal"
   ],
   "dependencies": {
-    "express": "~4.2.0",
-    "express-session": "*",
-    "connect-flash": "*",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.4.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.3.2",
+    "debug": "^0.7.4",
+    "dotenv": "^0.2.8",
+    "express": "^4.5.1",
+    "express-session": "^1.6.4",
     "jade": "~1.3.0",
-    "mongodb": "*",
-    "winston": "~0.7.2",
+    "markdown-js": "0.0.3",
+    "mongodb": "^1.4.7",
     "mongoose": "~3.8.8",
+    "passport": "^0.2.0",
+    "passport-google-oauth": "^0.1.5",
+    "pretty-hrtime": "^0.2.1",
     "q": "~1.0.0",
-    "dotenv": "~0.2.3",
-    "underscore": "~1.5.2",
-    "underscore.string": "*",
-    "pretty-hrtime": "*",
-    "bcrypt-nodejs": "*",
-    "passport": "*",
-    "passport-google-oauth": "*",
-    "markdown-js": "*"
+    "underscore": "^1.6.0",
+    "underscore.string": "^2.3.3",
+    "winston": "~0.7.2"
   },
   "devDependencies": {
-    "chai": "*",
-    "mocha": "*",
-    "sinon": "*"
+    "chai": "^1.9.1",
+    "mocha": "^1.20.1",
+    "sinon": "^1.10.2"
   },
   "main": "./bin/www",
   "engines": {
