@@ -56,6 +56,10 @@ var configuration = {
     hostname: _.first(_.last(process.env.DATABASE_CONNECTION.split('//')).split('/'))
   },
 
+  meetup: {
+    apiKey: process.env.MEETUP_API_KEY
+  }
+
   // authentication information
   auth: {
 

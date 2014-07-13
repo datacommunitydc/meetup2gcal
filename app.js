@@ -30,6 +30,7 @@ var session  = require('express-session');
 var flash    = require('connect-flash');
 var config   = require('./config/application');
 var logger   = require('./app/utils/lumberjack');
+var meetup   = require('meetup-api')(config.meetup.apiKey);
 
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
