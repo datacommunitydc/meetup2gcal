@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+/**
+ *  msync
+ *  A command line tool that synchronizes Meetup with our db/gcal.
+ *
+ *  Author:   Harlan Harris <harlan@datacommunitydc.org>
+ *  Created:  Sun Jul 13 12:38:35 2014 -0400
+ *
+ *  Copyright (C) 2014 Data Community DC
+ *  For license information, see LICENSE.txt
+ *
+ *  ID: msync [] harlan@datacommunitydc.org $
+ */
+
+// JS Hint directives and strict mode
+/* globals exports,__filename */
+'use strict';
+
+// Async finish command
+function finish(err) {
+  if (err) {
+    console.log('An error occurred!', err);
+    process.exit(1);
+  } else {
+    process.exit(0);
+  }
+}
+
+// main functionality
+function main(argv) {
+
+  // Initialize local variables
+  var mongoose = require('mongoose')
+    , config   = require('../config/application')
+    , logger   = require('../app/utils/lumberjack')
+    , fs = require('fs')
+    , _  = require('underscore')
+    , Q  = require('q');
+
+  _.str  = require('underscore.string');
+
+  // Harlan writes here!
+
+  // Initialize database -- load models
+
+  // Get stuff from Meetup.com
+
+  // Make sure to call finish!
+  console.log('done!');
+  finish();
+
+}
+
+// Only run this script if we're main
+if (require.main == module) {
+  try {
+    var args = process.argv.slice(2);
+    main(args);
+  } catch (err) {
+    finish(err);
+  }
+}
