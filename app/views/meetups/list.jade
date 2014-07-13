@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .col-md-12
+        .page-header
+          h1 Meetups Manager
+    .row
+      .col-md-12
+        table(class='table table-bordered table-hover')
+          thead
+            th Meetup Id
+            th Name
+            th Slug
+            th Coordinates
+            th Join Mode
+            th Attendees
+          tbody
+            each meetup in meetups
+              tr
+                td= meetup.meetup_id
+                td= meetup.name
+                td= meetup.slug
+                td  (#{meetup.coordinates.latitude}, #{meetup.coordinates.longitude})
+                td= meetup.join_mode
+                td= meetup.who

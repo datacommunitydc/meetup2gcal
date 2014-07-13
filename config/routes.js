@@ -84,4 +84,10 @@ module.exports = function(app) {
 
   app.get('/users', authenticate, register('users', 'list'));
 
+  ////////////////////////////////////////////////////////////////////////
+  // MEETUPS ROUTES
+  ////////////////////////////////////////////////////////////////////////
+
+  app.get('/meetups', authenticate, register('meetups', 'list'));
+
 };
