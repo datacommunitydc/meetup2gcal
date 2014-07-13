@@ -14,6 +14,8 @@ Authentication is provided by Google - please login using your @datacommunitydc.
 ## Developer Notes ##
 
 * Store your local development environment in a `.env` file in the root
+* With NPM installed, do `npm install` to pull libraries, and `sudo npm install -g nodemon` to install [https://github.com/remy/nodemon](nodemon)
+* Make sure there's a local MongoDB database running in the dev environment
 * Use `make runserver` to execute the dev environment and run the server with automatic reloads on save (using nodemon)
 * Use `make test` to execute the test scripts (using mocha)
 
