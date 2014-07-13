@@ -33,3 +33,7 @@ img.logo {
     margin-right: 22px;
     max-width: 200px;
 }
+
+.username {
+  margin-top: -10px;
+}

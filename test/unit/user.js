@@ -52,6 +52,16 @@ module.exports = function() {
 
     it('should have an updated date on save');
 
+    it('should ensure the username is unique');
+
+    it('should ensure the email is unique');
+
+    it('should use the first part of the email as the username if not provided');
+
+    it('should increment the username if a duplicate exists');
+
+    it('should ensure unique usernames recursively');
+
   });
 
 };

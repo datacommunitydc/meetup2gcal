@@ -33,6 +33,7 @@ var qs       = require('querystring');
 
 var UserSchema = new Schema({
   email             : { type: String, required: true },
+  username          : { type: String, required: true },
   name              : { type: String, required: true },
   password          : { type: String, required: false },
   avatar            : { type: String, required: false },
@@ -54,6 +55,7 @@ var UserSchema = new Schema({
 //////////////////////////////////////////////////////////////////////////
 
 UserSchema.path('email').index({ unique: true });
+UserSchema.path('username').index({ unique: true });
 UserSchema.path('google.id').index({ unique: true });
 
 //////////////////////////////////////////////////////////////////////////
@@ -76,7 +78,17 @@ UserSchema.pre('save', function(next) {
   var now  = new Date();
   self.updated = now;
 
-  next();
+  // Use first part of email as username if username is null
+  if (!self.username) {
+    self.username = self.email.split('@')[0];
+  }
+
+  // Ensure a unique username
+  self.ensureUnique()
+    .then(function(user) {
+      next();
+    }, next).fail(next);
+
 });
 
 //////////////////////////////////////////////////////////////////////////
@@ -101,6 +113,35 @@ UserSchema.methods.generateHash = function(password) {
  */
 UserSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.ensureUnique = function() {
+  var self  = this;
+  var query = { _id: { '$ne': self._id }, username: self.username };
+
+  return Q(UserModel.find(query).exec())
+    .then(function(users) {
+      if (users.length > 0) {
+
+        // Test and increment
+        var pattern = /^[\w-]+-(\d+)$/i;
+        if (pattern.test(self.username)) {
+          // Already a -n in the slug, so increment
+          var parts = self.username.match(pattern);
+          var next  = parseInt(parts[1]) + 1;
+          self.username = self.username.replace(/-\d+(?=[^\d]*$)/i, '-' + next.toString());
+        } else {
+          // First time adding a -n to the slug
+          self.username = self.username + '-1';
+        }
+
+        // Recursive ensure unique
+        return self.ensureUnique();
+      }
+
+      // Recursive termination condition;
+      return Q(self);
+    });
 };
 
 //////////////////////////////////////////////////////////////////////////
