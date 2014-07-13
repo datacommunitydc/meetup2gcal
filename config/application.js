@@ -58,7 +58,7 @@ var configuration = {
 
   meetup: {
     apiKey: process.env.MEETUP_API_KEY
-  }
+  },
 
   // authentication information
   auth: {
