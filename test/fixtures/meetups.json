@@ -1,0 +1,34 @@
+[	{
+		"meetup_id": 6996692,
+		"name": "Data Community DC",
+		"urlname": "Data-Community-DC",
+		"join_mode": "open",
+		"who": "Data Enthusiasts",
+		"coordinates": {
+			"latitude": 38.90999984741211,
+			"longitude": -77.0199966430664
+		}
+	},
+	{
+		"meetup_id": 2215331,
+		"name": "Data Science DC",
+		"urlname": "Data-Science-DC",
+		"join_mode": "open",
+		"who": "Data Scientists",
+		"coordinates": {
+			"latitude": 38.90999984741211,
+			"longitude": -77.0199966430664
+		}
+	},
+	{
+		"meetup_id": 7616132,
+		"name": "DC Natural Language Processing",
+		"urlname": "DC-NLP",
+		"join_mode": "open",
+		"who": "Computational Linguists",
+		"coordinates": {
+			"latitude": 38.90999984741211,
+			"longitude": -77.0199966430664
+		}
+	}
+]
