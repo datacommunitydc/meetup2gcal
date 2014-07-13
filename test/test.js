@@ -45,6 +45,8 @@ console.log('        3) test server is %s:%d', addr.address, addr.port);
 
 require('./unit/user')();
 require('./unit/lumberjack')();
+require('./unit/meetup')();
+require('./unit/event')();
 
 //////////////////////////////////////////////////////////////////////////
 // Load integration tests

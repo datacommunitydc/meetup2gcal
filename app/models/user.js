@@ -2,13 +2,13 @@
  *  app/models/user.js
  *  User Profile model for user authentication with node
  *
- *  Author:   Benjamin Bengfort <ben@cobrain.com>
+ *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>
  *  Created:  Thu Jul 10 12:14:14 2014 -0400
  *
- *  Copyright (C) 2014 Cobrain Company
+ *  Copyright (C) 2014 Data Community DC
  *  For license information, see LICENSE.txt
  *
- *  ID: user.js [] ben@cobrain.com $
+ *  ID: user.js [] benb@datacommunitydc.org $
  */
 
 // JS Hint directives and strict mode
