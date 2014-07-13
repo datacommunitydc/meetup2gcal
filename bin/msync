@@ -37,6 +37,7 @@ function main(argv) {
     , fs = require('fs')
     , _  = require('underscore')
     , Q  = require('q');
+  var meetup   = require('meetup-api')(config.meetup.apiKey);
 
   _.str  = require('underscore.string');
 
@@ -45,10 +46,15 @@ function main(argv) {
   // Initialize database -- load models
 
   // Get stuff from Meetup.com
-
-  // Make sure to call finish!
-  console.log('done!');
-  finish();
+  var group_urlnames = ["data-community-dc", "data-science-dc", "Data-Visualization-DC", "DC-NLP"];
+  Q.all(_.map(group_urlnames, function(group_urlname) {
+    return Q.ninvoke(meetup, "getEvents", {'group_urlname' : group_urlname});
+  }))
+  .then(function(results) {
+    console.log(results);
+    finish();
+  }, finish)
+  .fail(finish);
 
 }
 

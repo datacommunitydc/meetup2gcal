@@ -41,14 +41,14 @@ var EventSchema = new Schema({
     no:               { type: Number, required: false },
     maybe:            { type: Number, required: false },
     pending:          { type: Number, required: false }
-  }
+  },
   venue             : {
     _id             : { type: Schema.ObjectId, auto: true },
     meetup_id       : { type: String, required: false },
     name            : { type: String, required: false },
     address         : { type: String, required: false },
-    city:           : { type: String, required: false },
-    state:          : { type: String, required: false },
+    city            : { type: String, required: false },
+    state           : { type: String, required: false },
     zip             : { type: String, required: false },
     coordinates     : {
       latitude      : { type: Number, required: false },
