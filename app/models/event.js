@@ -1,5 +1,5 @@
 /**
- *  event.js
+ *  app/models/event.js
  *  Event model for storing information about events
  *
  *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>
@@ -29,7 +29,37 @@ var Schema   = mongoose.Schema;
 //////////////////////////////////////////////////////////////////////////
 
 var EventSchema = new Schema({
-
+  meetup_id         : { type: String, required: false },
+  name              : { type: String, required: true },
+  description       : { type: String, required: false },
+  time              : { type: Date, required: true },
+  duration          : { type: Number, required: false },
+  url               : { type: String, required: false },
+  status            : { type: String, required: false, default: null },
+  rsvps             : {
+    yes:              { type: Number, required: false },
+    no:               { type: Number, required: false },
+    maybe:            { type: Number, required: false },
+    pending:          { type: Number, required: false }
+  }
+  venue             : {
+    _id             : { type: Schema.ObjectId, auto: true },
+    meetup_id       : { type: String, required: false },
+    name            : { type: String, required: false },
+    address         : { type: String, required: false },
+    city:           : { type: String, required: false },
+    state:          : { type: String, required: false },
+    zip             : { type: String, required: false },
+    coordinates     : {
+      latitude      : { type: Number, required: false },
+      longitude     : { type: Number, required: false }
+    }
+  },
+  group             : {
+    _id             : { type: Schema.ObjectId, auto: true },
+    meetup_id       : { type: String, required: false },
+    name            : { type: String, required: false }
+  },
   created           : { type: Date, required: true, default: Date.now },
   updated           : { type: Date, required: true, default: Date.now }
 });
@@ -41,6 +71,8 @@ var EventSchema = new Schema({
 //////////////////////////////////////////////////////////////////////////
 // Indexes
 //////////////////////////////////////////////////////////////////////////
+
+EventSchema.path('meetup_id').index({unique: true});
 
 //////////////////////////////////////////////////////////////////////////
 // Validation

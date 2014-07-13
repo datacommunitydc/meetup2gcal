@@ -1,5 +1,5 @@
 /**
- *  index.js
+ *  app/controllers/index.js
  *  Controllers for the index or home routes and static pages.
  *
  *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>

@@ -1,5 +1,5 @@
 /**
- *  meetup.js
+ *  app/models/meetup.js
  *  Meetup model for storing information about meetups
  *
  *  Author:   Benjamin Bengfort <benb@datacommunitydc.org>
