@@ -53,16 +53,20 @@ function main(argv) {
   var Meetup = require('../app/models/meetup');
   var Event  = require('../app/models/event');
 
-  // Get stuff from Meetup.com
-  var group_urlnames = ["data-community-dc", "data-science-dc", "Data-Visualization-DC", "DC-NLP"];
-  Q.all(_.map(group_urlnames, function(group_urlname) {
-    return Q.ninvoke(meetup, "getEvents", {'group_urlname' : group_urlname});
-  }))
-  .then(function(results) {
-    console.log(results);
-    finish();
-  }, finish)
-  .fail(finish);
+  // get upcoming events for all known groups
+  Q(Meetup.find().exec())
+  .then(function(meetup_objs) {
+    //console.log(meetup_objs);
+    Q.all(_.map(meetup_objs, function(meetup_obj) {
+      // get events for this group
+      return Q.ninvoke(meetup, "getEvents", {'group_id' : meetup_obj.meetup_id});
+    }))
+    .then(function(results) {
+      console.log(results);
+      finish();
+    }, finish)
+    .fail(finish);
+  })
 
 }
 
