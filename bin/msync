@@ -34,16 +34,24 @@ function main(argv) {
   var mongoose = require('mongoose')
     , config   = require('../config/application')
     , logger   = require('../app/utils/lumberjack')
+    , meetup   = require('meetup-api')(config.meetup.apiKey)
     , fs = require('fs')
     , _  = require('underscore')
     , Q  = require('q');
-  var meetup   = require('meetup-api')(config.meetup.apiKey);
 
   _.str  = require('underscore.string');
 
-  // Harlan writes here!
+  // Initialize the connection to the database
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function callback() {
+      logger.info('Connected to the database at %s', config.database.connection);
+  });
+  mongoose.connect(config.database.connection);
 
-  // Initialize database -- load models
+  // Load the models that are required
+  var Meetup = require('../app/models/meetup');
+  var Event  = require('../app/models/meetup');
 
   // Get stuff from Meetup.com
   var group_urlnames = ["data-community-dc", "data-science-dc", "Data-Visualization-DC", "DC-NLP"];
