@@ -44,6 +44,8 @@ module.exports = function() {
 
     it('should have tests');
 
+    it('should have a virtual setter and getter called slug for urlname');
+
   });
 
 };

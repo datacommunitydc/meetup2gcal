@@ -29,7 +29,15 @@ var Schema   = mongoose.Schema;
 //////////////////////////////////////////////////////////////////////////
 
 var MeetupSchema = new Schema({
-
+  meetup_id         : { type: Number, required: true },
+  name              : { type: String, required: true },
+  urlname           : { type: String, required: true },
+  join_mode         : { type: String, required: false },
+  who               : { type: String, required: false },
+  coordinates       : {
+    latitude        : { type: Number, required: false },
+    longitude       : { type: Number, required: false }
+  },
   created           : { type: Date, required: true, default: Date.now },
   updated           : { type: Date, required: true, default: Date.now }
 });
@@ -41,6 +49,9 @@ var MeetupSchema = new Schema({
 //////////////////////////////////////////////////////////////////////////
 // Indexes
 //////////////////////////////////////////////////////////////////////////
+
+MeetupSchema.path('meetup_id').index({unique: true});
+MeetupSchema.path('urlname').index({unique: true});
 
 //////////////////////////////////////////////////////////////////////////
 // Validation
@@ -73,6 +84,19 @@ MeetupSchema.pre('save', function(next) {
 //////////////////////////////////////////////////////////////////////////
 // Virtual Properties
 //////////////////////////////////////////////////////////////////////////
+
+/**
+ * Alias for the urlname (slug)
+ *
+ * @return {String} the slug (urlname)
+ */
+MeetupSchema.virtual('slug')
+  .get(function() {
+    return this.urlname;
+  })
+  .set(function(value) {
+    this.set('urlname', value);
+  });
 
 //////////////////////////////////////////////////////////////////////////
 // Static Methods

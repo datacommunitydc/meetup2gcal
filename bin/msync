@@ -51,7 +51,7 @@ function main(argv) {
 
   // Load the models that are required
   var Meetup = require('../app/models/meetup');
-  var Event  = require('../app/models/meetup');
+  var Event  = require('../app/models/event');
 
   // Get stuff from Meetup.com
   var group_urlnames = ["data-community-dc", "data-science-dc", "Data-Visualization-DC", "DC-NLP"];

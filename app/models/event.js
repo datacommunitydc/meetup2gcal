@@ -56,9 +56,9 @@ var EventSchema = new Schema({
     }
   },
   group             : {
-    _id             : { type: Schema.ObjectId, auto: true },
-    meetup_id       : { type: String, required: false },
-    name            : { type: String, required: false }
+    _id             : { type: Schema.ObjectId, ref: 'Meetup' },
+    meetup_id       : { type: Number, required: false },
+    name            : { type: String, required: false },
   },
   created           : { type: Date, required: true, default: Date.now },
   updated           : { type: Date, required: true, default: Date.now }
