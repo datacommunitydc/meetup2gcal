@@ -13,7 +13,8 @@ Authentication is provided by Google - please login using your @datacommunitydc.
 
 ## Developer Notes ##
 
-* Store your local development environment in a `.env` file in the root
+* Store your local development environment in a `.env` file in the root. (TODO: document each variable)
+* Refer to the `google-oauth-jwt` [https://www.npmjs.org/package/google-oauth-jwt](documentation) to understand the authentication flow. You'll need a PEM file generated via the Google Developers Console for this app, and that account needs to be authorized to write to the specified calendar.
 * With NPM installed, do `npm install` to pull libraries, and `sudo npm install -g nodemon` to install [https://github.com/remy/nodemon](nodemon)
 * Make sure there's a local MongoDB database running in the dev environment
 * Use `make runserver` to execute the dev environment and run the server with automatic reloads on save (using nodemon)

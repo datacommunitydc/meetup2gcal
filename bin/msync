@@ -35,6 +35,7 @@ function main(argv) {
     , config   = require('../config/application')
     , logger   = require('../app/utils/lumberjack')
     , meetup   = require('meetup-api')(config.meetup.apiKey)
+    , request = require('google-oauth-jwt').requestWithJWT()
     , fs = require('fs')
     , _  = require('underscore')
     , Q  = require('q');
@@ -53,22 +54,53 @@ function main(argv) {
   var Meetup = require('../app/models/meetup');
   var Event  = require('../app/models/event');
 
+  // Google Calendar
   // get upcoming events for all known groups
+  var jwt_obj = {
+                  email: config.jwt.email,
+                  keyFile: config.jwt.keyFile,
+                  scopes: ['https://www.googleapis.com/auth/calendar']
+                };
   Q(Meetup.find().exec())
   .then(function(meetup_objs) {
     //console.log(meetup_objs);
-    Q.all(_.map(meetup_objs, function(meetup_obj) {
-      // get events for this group
-      return Q.ninvoke(meetup, "getEvents", {'group_id' : meetup_obj.meetup_id});
-    }))
-    .then(function(results) {
-      console.log(results);
-      finish();
-    }, finish)
-    .fail(finish);
+    _.map(meetup_objs, function(meetup_obj) {
+      // get events for this group and push them to GCal
+      meetup.getEvents({'group_id' : meetup_obj.meetup_id}, function(err,events) {
+        if (err) finish(err);
+        _.map(events.results, function(oneevent) {
+          var post_body = JSON.stringify({
+              'summary': oneevent.name,
+              'location': oneevent.venue.name + ", " + oneevent.venue.address_1 + ", " +
+                oneevent.venue.city + ", " + oneevent.venue.state,
+              'start': {
+                'dateTime': new Date(oneevent.time)
+              },
+              'end': {
+                'dateTime': new Date(oneevent.time + (oneevent.duration || 1000*60*60*2))
+              },
+              'description': oneevent.event_url + "\n\n" + oneevent.description,
+              'source': {
+                'title': "Event Listing on Meetup.com",
+                'url': oneevent.event_url
+              }
+            });
+          console.log(post_body);
+          request.post({
+            url: 'https://www.googleapis.com/calendar/v3/calendars/' + config.gcalID + '/events',
+            jwt: jwt_obj,
+            headers: {'content-type': 'application/json'},
+            body: post_body
+          },
+          function (err, res, body) {
+            if (err) finish(err);
+            console.log(body); 
+          });
+        })
+      })
+    })
   })
-
-}
+};
 
 // Only run this script if we're main
 if (require.main == module) {

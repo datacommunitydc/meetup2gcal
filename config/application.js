@@ -60,6 +60,13 @@ var configuration = {
     apiKey: process.env.MEETUP_API_KEY
   },
 
+  // JSON Web Token for Google API access
+  jwt: {
+    email: process.env.JWT_EMAIL,
+    keyFile: process.env.JWT_KEY_FILE
+  },
+  gcalID: process.env.GCAL_ID,
+
   // authentication information
   auth: {
 
