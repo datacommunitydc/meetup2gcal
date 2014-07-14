@@ -19,18 +19,14 @@
 // Require dependencies
 //////////////////////////////////////////////////////////////////////////
 
-var Q       = require('q');
-var _       = require('underscore');
-var Meetup  = require('../models/meetup');
-var config  = require('../../config/application');
-var meetapi = require('meetup-api')(config.meetup.apiKey);
-var logger  = require('../utils/lumberjack');
-
-var tossback = function(next) {
-  return function(err) {
-    next(err);
-  };
-}
+var Q        = require('q');
+var _        = require('underscore');
+var Meetup   = require('../models/meetup');
+var config   = require('../../config/application');
+var meetapi  = require('meetup-api')(config.meetup.apiKey);
+var logger   = require('../utils/lumberjack');
+var helpers  = require('../utils/helpers');
+var tossback = helpers.tossback;
 
 //////////////////////////////////////////////////////////////////////////
 // List endpoints
@@ -56,11 +52,7 @@ exports.list = function(req, res, next) {
             title: 'DC2 Events | All Meetups',
             meetups: meetups,
             user: req.user,
-            messages: {
-              success: _.unique(req.flash('success')),
-              info: _.unique(req.flash('info')),
-              error: _.unique(req.flash('error'))
-            }
+            messages: helpers.getFlashMessages(req)
           };
 
           res.render('meetups/list', context);
@@ -102,7 +94,7 @@ exports.create = function(req, res, next) {
 
       if (results.results.length == 0) {
         logger.info("Searched for Meetup group '" + slug +"' but could not locate it.");
-        req.flash("error", "Could not find a Meetup with url slug \"" + slug + "\".");
+        req.flash("danger", "Could not find a Meetup with url slug \"" + slug + "\".");
         res.redirect('/meetups');
       }
 

@@ -2,17 +2,8 @@ extends layout
 
 block content
   .container
-    if messages
-      .row
-        .col-md-12
-          .alerts
-            each message in messages
-              div(class="alert alert-warning alert-dismissable fade in", role="alert")
-                button(type="button", class="close", data-dismiss="alert")
-                  span(aria-hidden="true") &times;
-                  span.sr-only Close
-                p.
-                  <strong>Warning!</strong> #{message}
+    include includes/alerts
+    include includes/calendar
 
     .row
       .col-md-12
@@ -22,6 +13,9 @@ block content
           .pull-left
             h1= title
             p.lead Welcome to #{title}
+          .pull-right
+            div(style="margin-top:24px; margin-right:10px")
+              +calendar(new Date())
           .clearfix
 
 block append javascript

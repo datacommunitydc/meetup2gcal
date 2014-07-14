@@ -3,30 +3,7 @@ extends ../layout
 block content
   .container
     if messages
-      .row
-        .col-md-12
-          .alerts
-            each message in messages.info
-              div(class="alert alert-info alert-dismissable fade in", role="alert")
-                button(type="button", class="close", data-dismiss="alert")
-                  span(aria-hidden="true") &times;
-                  span.sr-only Close
-                p.
-                  <strong>Heads up!</strong> #{message}
-            each message in messages.success
-              div(class="alert alert-success alert-dismissable fade in", role="alert")
-                button(type="button", class="close", data-dismiss="alert")
-                  span(aria-hidden="true") &times;
-                  span.sr-only Close
-                p.
-                  <strong>Success!</strong> #{message}
-            each message in messages.error
-              div(class="alert alert-danger alert-dismissable fade in", role="alert")
-                button(type="button", class="close", data-dismiss="alert")
-                  span(aria-hidden="true") &times;
-                  span.sr-only Close
-                p.
-                  <strong>Whoops!</strong> #{message}
+      include ../includes/alerts
 
     .row
       .col-md-12

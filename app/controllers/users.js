@@ -19,11 +19,11 @@
 // Require dependencies
 //////////////////////////////////////////////////////////////////////////
 
-var express = require('express');
-var router = express.Router();
-var User   = require('../models/user');
-var Q      = require('q');
-var _      = require('underscore');
+var User     = require('../models/user');
+var Q        = require('q');
+var _        = require('underscore');
+var helpers  = require('../utils/helpers');
+var tossback = helpers.tossback;
 
 //////////////////////////////////////////////////////////////////////////
 // List endpoints
@@ -36,16 +36,17 @@ var _      = require('underscore');
  * @param  {Response} res the response to be sent
  * @return {null}
  */
-exports.list = function(req, res) {
+exports.list = function(req, res, next) {
+
+  var context = {
+    title: 'DC2 Events | All Users',
+    user: req.user
+  }
 
   Q(User.find().exec())
     .then(function(users) {
-      res.render('users', {title: 'DC2 Events | All Users', users: users, user: req.user});
-    },
-    function(err) {
-      throw err;
-    }).fail(function(err) {
-      throw err;
-    });
-
+      context.users = users;
+      res.render('users', context);
+    }, tossback(next))
+    .fail(tossback(next));
 };

@@ -1,0 +1,21 @@
+mixin alert(type, message)
+  div(class="alert alert-#{type} alert-dismissable fade in", role="alert")
+    button(type="button", class="close", data-dismiss="alert")
+      span(aria-hidden="true") &times;
+      span.sr-only Close
+    p
+      if type == 'success'
+        <strong>Success!</strong> #{message}
+      else if type == 'info'
+        <strong>Heads up!</strong> #{message}
+      else if type == 'warning'
+        <strong>Warning!</strong> #{message}
+      else if type == 'danger'
+        <strong>Whoops!</strong> #{message}
+
+if messages
+  .row
+    .col-md-12
+      .alerts
+        each message in messages
+            +alert(message.type, message.message)

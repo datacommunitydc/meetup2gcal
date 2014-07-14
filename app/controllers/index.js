@@ -20,6 +20,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 var _ = require('underscore');
+var helpers = require('../utils/helpers');
 
 //////////////////////////////////////////////////////////////////////////
 // Static page routes
@@ -36,7 +37,7 @@ exports.index = function(req, res) {
   var context = {
     title: 'DC2 Events',
     user: req.user,
-    messages: _.unique(req.flash("warning"))
+    messages: helpers.getFlashMessages(req)
   }
 
   res.render('index', context);

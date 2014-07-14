@@ -1,0 +1,5 @@
+mixin calendar(timestamp)
+  time(datetime=moment(timestamp).toJSON(), class="icon")
+    em= moment(timestamp).format("dddd")
+    strong= moment(timestamp).format("MMMM")
+    span= timestamp.getDate()
