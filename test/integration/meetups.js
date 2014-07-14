@@ -53,6 +53,42 @@ module.exports = function() {
 
       it('should have the logged in user in the context');
 
+      it('should render HTML if the content type is text/html');
+
+      it('should render HTML if the content type is */*');
+
+      it('should render JSON if the content type is application/json');
+
+    });
+
+    //////////////////////////////////////////////////////////////////////
+    // POST /meetups endpoint tests
+    //////////////////////////////////////////////////////////////////////
+
+    describe('POST /meetups', function() {
+
+      it('should require authentication to view');
+
+      it('should accept a urlname (slug) as a parameter');
+
+      it('should redirect back to GET /meetups when done');
+
+      it('should give flash messages as reporting');
+
+      it('should message the front end when it can\'t find a meetup slug');
+
+      it('should create a meetup if it found one that didn\'t exist');
+
+      it('should update a meetup if it found one that already exists');
+
+      it('should have the logged in user in the context');
+
+      it('should render HTML if the content type is text/html');
+
+      it('should render HTML if the content type is */*');
+
+      it('should render JSON if the content type is application/json');
+
     });
 
   });

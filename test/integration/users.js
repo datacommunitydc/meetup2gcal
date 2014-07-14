@@ -53,6 +53,12 @@ module.exports = function() {
 
       it('should have the logged in user in the context');
 
+      it('should render HTML if the content type is text/html');
+
+      it('should render HTML if the content type is */*');
+
+      it('should render JSON if the content type is application/json');
+
     });
 
   });

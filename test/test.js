@@ -56,3 +56,4 @@ require('./integration/index')();
 require('./integration/auth')();
 require('./integration/users')();
 require('./integration/msync')();
+require('./integration/meetups')();

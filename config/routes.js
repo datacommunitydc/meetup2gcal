@@ -55,6 +55,7 @@ module.exports = function(app) {
    */
   function authenticate(req, res, next) {
     if (req.isAuthenticated()) return next();
+    req.flash("warning", "You must log in to view the " + req.path + " endpoint!");
     res.redirect('/');
   }
 
@@ -89,5 +90,7 @@ module.exports = function(app) {
   ////////////////////////////////////////////////////////////////////////
 
   app.get('/meetups', authenticate, register('meetups', 'list'));
+
+  app.post('/meetups', authenticate, register('meetups', 'create'));
 
 };
