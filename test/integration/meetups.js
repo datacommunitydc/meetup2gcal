@@ -51,6 +51,8 @@ module.exports = function() {
 
       it('should require authentication to view');
 
+      it('should require authorization to view');
+
       it('should have the logged in user in the context');
 
       it('should render HTML if the content type is text/html');
@@ -68,6 +70,8 @@ module.exports = function() {
     describe('POST /meetups', function() {
 
       it('should require authentication to view');
+
+      it('should require authorization to view');
 
       it('should accept a urlname (slug) as a parameter');
 

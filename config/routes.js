@@ -48,6 +48,7 @@ module.exports = function(app) {
 
   /**
    * Middleware that ensures the endpoint is authenticated before routing.
+   *
    * @param  {Request}    req  the request being handled
    * @param  {Response}   res  the current response
    * @param  {Function}   next callback to skip other middleware
@@ -56,6 +57,21 @@ module.exports = function(app) {
   function authenticate(req, res, next) {
     if (req.isAuthenticated()) return next();
     req.flash("warning", "You must log in to view the " + req.path + " endpoint!");
+    res.redirect('/');
+  }
+
+  /**
+   * Middleware that not only ensures authentication before routing, but
+   * also does a check to make sure that the user isAdmin.
+   *
+   * @param  {Request}    req  the request being handled
+   * @param  {Response}   res  the current response
+   * @param  {Function}   next callback to skip other middleware
+   * @return {null}
+   */
+  function authorize(req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin()) return next();
+    req.flash("warning", "You are not authorized to view the " + req.path + " endpiont!");
     res.redirect('/');
   }
 
@@ -83,14 +99,14 @@ module.exports = function(app) {
   // USERS ROUTES
   ////////////////////////////////////////////////////////////////////////
 
-  app.get('/users', authenticate, register('users', 'list'));
+  app.get('/users', authorize, register('users', 'list'));
 
   ////////////////////////////////////////////////////////////////////////
   // MEETUPS ROUTES
   ////////////////////////////////////////////////////////////////////////
 
-  app.get('/meetups', authenticate, register('meetups', 'list'));
+  app.get('/meetups', authorize, register('meetups', 'list'));
 
-  app.post('/meetups', authenticate, register('meetups', 'create'));
+  app.post('/meetups', authorize, register('meetups', 'create'));
 
 };

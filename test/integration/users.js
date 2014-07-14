@@ -51,6 +51,8 @@ module.exports = function() {
 
       it('should require authentication to view');
 
+      it('should require authorization to view');
+
       it('should have the logged in user in the context');
 
       it('should render HTML if the content type is text/html');

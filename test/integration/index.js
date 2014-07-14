@@ -49,6 +49,8 @@ module.exports = function() {
 
       it('should have a title and a user object in context');
 
+      it('should display an alert if the user was redirected from an unauthorized location');
+
     });
 
   });

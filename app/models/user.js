@@ -115,6 +115,12 @@ UserSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
+/**
+ * Ensures that the username is unqiue by recursively slugifying usernames
+ * that are found in the database until a unique one is found.
+ *
+ * @return {Promise} returns a promise since this is dealing with db.
+ */
 UserSchema.methods.ensureUnique = function() {
   var self  = this;
   var query = { _id: { '$ne': self._id }, username: self.username };
@@ -143,6 +149,23 @@ UserSchema.methods.ensureUnique = function() {
       return Q(self);
     });
 };
+
+/**
+ * Checks if the user is an admin or not based on their email address.
+ * This is very simple checking; since we are using Google Apps for auth,
+ * we simply check if the user has an @datacommunitydc.org email address,
+ * if so; they're an admin! It's not terribly secure, but it is sufficient.
+ *
+ * @return {Boolean} If the user is an admin.
+ */
+UserSchema.methods.isAdmin = function() {
+  var domain = this.email.split('@')[1].toLowerCase();
+  if (domain === 'datacommunitydc.org') {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Virtual Properties

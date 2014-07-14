@@ -62,6 +62,12 @@ module.exports = function() {
 
     it('should ensure unique usernames recursively');
 
+    it('should return false on isAdmin if the user has a @gmail email account');
+
+    it('should return true on isAdmin if the user has an @datacommunitydc email account');
+
+    it('should ensure isAdmin is case insensitive when checking the domain');
+
   });
 
 };
