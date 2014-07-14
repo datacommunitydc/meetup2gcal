@@ -34,7 +34,7 @@ var _ = require('underscore');
  */
 exports.index = function(req, res) {
   var context = {
-    title: 'meetup2gcal',
+    title: 'DC2 Events',
     user: req.user,
     messages: _.unique(req.flash("warning"))
   }

@@ -53,7 +53,7 @@ exports.list = function(req, res, next) {
 
         html: function() {
           var context = {
-            title: 'meetup2gcal | All Meetups',
+            title: 'DC2 Events | All Meetups',
             meetups: meetups,
             user: req.user,
             messages: {

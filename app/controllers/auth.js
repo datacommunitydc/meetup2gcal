@@ -35,6 +35,7 @@ var _ = require('underscore')
  */
 exports.profile = function(req, res) {
   var context = {
+    title: "DC2 Events | User Profile",
     user: req.user
   };
 

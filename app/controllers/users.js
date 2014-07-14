@@ -40,7 +40,7 @@ exports.list = function(req, res) {
 
   Q(User.find().exec())
     .then(function(users) {
-      res.render('users', {title: 'meetup2gcal | All Users', users: users, user: req.user});
+      res.render('users', {title: 'DC2 Events | All Users', users: users, user: req.user});
     },
     function(err) {
       throw err;
