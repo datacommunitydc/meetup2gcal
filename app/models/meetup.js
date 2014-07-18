@@ -23,6 +23,9 @@ var _ = require('underscore');
 var Q = require('q');
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
+var config   = require('../../config/application');
+var meetapi  = require('meetup-api')(config.meetup.apiKey);
+var Event    = require('./event');
 
 //////////////////////////////////////////////////////////////////////////
 // MeetupSchema
@@ -80,6 +83,61 @@ MeetupSchema.pre('save', function(next) {
 //////////////////////////////////////////////////////////////////////////
 // Instance Methods
 //////////////////////////////////////////////////////////////////////////
+
+/**
+ * Fetches events using the Meetup API for the particular meetup.
+ *
+ * @return {Promise} A promise for the event fetching.
+ * @todo  add a time range for fetching, and other params.
+ */
+MeetupSchema.methods.fetchEvents = function() {
+  var self   = this;
+  var params = {
+    'group_id': self.meetup_id
+  }
+
+  // Fetch events from the meetup-api
+  return Q.ninvoke(meetapi, 'getEvents', params)
+    .then(function(events) {
+
+      // Construct an array of Event objects
+      var e = _.map(events.results, function(edata) {
+        return new Event({
+          meetup_id         : edata.id,
+          name              : edata.name,
+          description       : edata.description,
+          time              : new Date(edata.time),
+          duration          : edata.duration,
+          url               : edata.event_url,
+          status            : edata.status,
+          rsvps             : {
+            yes:              edata.yes_rsvp_count,
+            maybe:            edata.maybe_rsvp_count,
+          },
+          venue             : {
+            meetup_id       : edata.venue.id,
+            name            : edata.venue.name,
+            address         : edata.venue.address_1,
+            city            : edata.venue.city,
+            state           : edata.venue.state,
+            zip             : edata.venue.zip,
+            coordinates     : {
+              latitude      : edata.venue.lat,
+              longitude     : edata.venue.lon
+            }
+          },
+          group             : {
+            _id             : self._id,
+            meetup_id       : edata.group.id,
+            name            : edata.group.name,
+          }
+        });
+      });
+
+      // Return the array
+      return Q(e);
+    });
+};
 
 //////////////////////////////////////////////////////////////////////////
 // Virtual Properties
