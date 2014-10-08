@@ -38,6 +38,12 @@ Pull requests will be monitored by @bbengfort and @harlanh but if you become an 
 
 Keep in mind that there are release notes and more details on the [wiki](https://github.com/datacommunitydc/meetup2gcal/wiki).
 
+## msync ##
+
+To run the batch script:
+
+* From the main directory (so the script can pull .env): ./bin/msync
+
 ## Technology ##
 
 meetup2gcal needs a better name, but is written in Node.js (Javascript). Useful pacakges include the following:

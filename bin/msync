@@ -17,6 +17,8 @@
 /* globals exports,__filename */
 'use strict';
 
+console.log("Starting up!");
+
 // Async finish command
 function finish(err) {
   if (err) {
@@ -31,18 +33,20 @@ function finish(err) {
 function main(argv) {
 
   // Initialize local variables
-  var mongoose = require('mongoose')
-    , config   = require('../config/application')
-    , logger   = require('../app/utils/lumberjack')
-    , meetup   = require('meetup-api')(config.meetup.apiKey)
-    , request = require('google-oauth-jwt').requestWithJWT()
-    , fs = require('fs')
-    , _  = require('underscore')
-    , Q  = require('q');
+  var mongoose = require('mongoose');
+  console.log("loaded some stuff");
+  var config   = require('../config/application');
+  var logger   = require('../app/utils/lumberjack');
+  var meetup   = require('meetup-api')(config.meetup.apiKey);
+  var request = require('google-oauth-jwt').requestWithJWT();
+  var fs = require('fs');
+  var _  = require('underscore');
+  var Q  = require('q');
 
   _.str  = require('underscore.string');
 
   // Initialize the connection to the database
+  console.log("connecting to database");
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function callback() {
@@ -51,7 +55,9 @@ function main(argv) {
   mongoose.connect(config.database.connection);
 
   // Load the models that are required
+  console.log("loading Meetup model");
   var Meetup = require('../app/models/meetup');
+  console.log("loading Event model");
   var Event  = require('../app/models/event');
 
   // Google Calendar
@@ -63,16 +69,21 @@ function main(argv) {
                 };
   Q(Meetup.find().exec())
   .then(function(meetup_objs) {
-    //console.log(meetup_objs);
+    console.log(meetup_objs);
     _.map(meetup_objs, function(meetup_obj) {
       // get events for this group and push them to GCal
       meetup.getEvents({'group_id' : meetup_obj.meetup_id}, function(err,events) {
         if (err) finish(err);
         _.map(events.results, function(oneevent) {
+          console.log(oneevent);
           var post_body = JSON.stringify({
               'summary': oneevent.name,
-              'location': oneevent.venue.name + ", " + oneevent.venue.address_1 + ", " +
-                oneevent.venue.city + ", " + oneevent.venue.state,
+              'location': function() {if (oneevent.venue) {
+                  oneevent.venue.name + ", " + oneevent.venue.address_1 + ", " +
+                  oneevent.venue.city + ", " + oneevent.venue.state
+                } else {
+                  ""
+                }}(),
               'start': {
                 'dateTime': new Date(oneevent.time)
               },
