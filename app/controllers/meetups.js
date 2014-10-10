@@ -28,6 +28,8 @@ var logger   = require('../utils/lumberjack');
 var helpers  = require('../utils/helpers');
 var tossback = helpers.tossback;
 
+var url      = require('url');
+
 //////////////////////////////////////////////////////////////////////////
 // List endpoints
 //////////////////////////////////////////////////////////////////////////
@@ -87,6 +89,12 @@ exports.list = function(req, res, next) {
 exports.create = function(req, res, next) {
   // Get the parameters from the post.
   var slug = req.body.slug;
+  // if the user enters a meetup url, accept it and parse out the slug
+  if(slug.substr(0,4) === "http") { 
+    slug = url.parse(slug).pathname;
+    slug = slug.substr(1);
+    slug = slug.substring(0,slug.search("/"));
+  }
 
   // Go to the Meetup API to fetch the data about the group
   Q.ninvoke(meetapi, 'getGroups', {group_urlname: slug})
