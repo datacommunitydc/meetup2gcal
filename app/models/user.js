@@ -26,6 +26,7 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var bcrypt   = require('bcrypt-nodejs');
 var qs       = require('querystring');
+var config   = require('../../config/application');
 
 //////////////////////////////////////////////////////////////////////////
 // UserSchema
@@ -153,14 +154,14 @@ UserSchema.methods.ensureUnique = function() {
 /**
  * Checks if the user is an admin or not based on their email address.
  * This is very simple checking; since we are using Google Apps for auth,
- * we simply check if the user has an @datacommunitydc.org email address,
- * if so; they're an admin! It's not terribly secure, but it is sufficient.
- *
+ * we simply check if the user has an email address in a provided set of
+ * domains -- if so; they're an admin! It's not terribly secure, but it is 
+ * sufficient.
  * @return {Boolean} If the user is an admin.
  */
 UserSchema.methods.isAdmin = function() {
   var domain = this.email.split('@')[1].toLowerCase();
-  if (domain === 'datacommunitydc.org') {
+  if (config.adminDomains.indexOf(domain) >= 0) {
     return true;
   } else {
     return false;

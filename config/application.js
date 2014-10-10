@@ -77,7 +77,10 @@ var configuration = {
       callbackURL  : process.env.GOOGLE_AUTH_CALLBACK
     }
 
-  }
+  },
+
+  // admin user domains
+  adminDomains: process.env.ADMIN_DOMAINS.split(",")
 
 };
 
