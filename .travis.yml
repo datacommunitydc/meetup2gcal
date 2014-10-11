@@ -17,3 +17,6 @@ notifications:
       - harlan@harris.name
     on_success: change
     on_failure: always
+
+# any environment variables required for the modules to load
+env: ADMIN_DOMAINS=domain,otherdomain
